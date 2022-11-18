@@ -2,7 +2,7 @@ import axios from "axios";
 
 const api = axios.create({
     baseURL:"https://api.themoviedb.org/3",
-    headers:{"Content-type": "application/json"}
+    headers:{"Content-Type": "application/json"}
 })
 
 /* 요청과 응답, 성공과 실패에 따라 작성됨 */

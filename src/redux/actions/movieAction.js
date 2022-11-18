@@ -1,23 +1,19 @@
 import api from "../api";
+import { movieActions } from "../reducers/movieReducer";
+
+const API_KEY = process.env.REACT_APP_API_KEY;
 
 function getMovies() {
     return async (dispatch, getState) => {
-        const popularMovieApi = await api.get(`/movie/popular?api_key=<<api_key>>&language=en-US&page=1`);
+        const popularMovieApi = api.get(`/movie/popular?api_key=${API_KEY}&language=en-US&page=1`);
+        const topRatedMovieApi = api.get(`/movie/top_rated?api_key=${API_KEY}&language=en-US&page=1`);
+        const upComingMovieApi = api.get(`/movie/upcoming?api_key=${API_KEY}&language=en-US&page=1`);
 
-        /* let url1 = `https://api.themoviedb.org/3`;
-        let response1 = await fetch(url1);
-        let data1 = await response1.json();
-        dispatch(movieActions.getPop({data1}));
+        /* 뒤에 불러올 세부 자료를 정해서 header까지 불러오지 않게 하면 된다. */
+        let [popularMovies, topRatedMovies, upComingMovies] = await Promise.all([popularMovieApi, topRatedMovieApi, upComingMovieApi]);
 
-        let url2 = `https://api.themoviedb.org/3/movie/top_rated?api_key=<<api_key>>&language=en-US&page=1`;
-        let response2 = await fetch(url2);
-        let data2 = await response2.json();
-        dispatch(movieActions.getTop({data2}));
-
-        let url3 = `https://api.themoviedb.org/3/movie/upcoming?api_key=<<api_key>>&language=en-US&page=1`;
-        let response3 = await fetch(url3);
-        let data3 = await response3.json();
-        dispatch(movieActions.getUpcom({data3})); */
+        /* GOOD! 이렇게 하면 반환된 객체 중에서 data 부분만 따로 불러오게 된다. */
+        dispatch(movieActions.getMovie([popularMovies.data, topRatedMovies.data, upComingMovies.data]));
     }
 }
 
