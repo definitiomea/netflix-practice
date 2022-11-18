@@ -1,7 +1,9 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import Banner from "../Components/Banner";
 import { movieAction } from "../redux/actions/movieAction";
+
+import Banner from "../Components/Banner";
+import MovieSlide from "../Components/MovieSlide";
 
 const Home = () => {
     const dispatch = useDispatch();
@@ -17,9 +19,11 @@ const Home = () => {
         <>
             {popularMovies.results && <Banner movie={popularMovies.results[0]}></Banner>}
             <h1>Popular Movie</h1>
-            {/* 호출할 컴포넌트들... */}
+            {popularMovies && <MovieSlide movies={popularMovies}></MovieSlide>}
             <h1>Top Rated Movie</h1>
+            {topRatedMovies && <MovieSlide movies={topRatedMovies}></MovieSlide>}
             <h1>Upcoming Movie</h1>
+            {upComingMovies && <MovieSlide movies={upComingMovies}></MovieSlide>}
         </>
     );
 }
