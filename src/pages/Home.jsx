@@ -5,16 +5,19 @@ import { movieAction } from "../redux/actions/movieAction";
 import Banner from "../Components/Banner";
 import MovieSlide from "../Components/MovieSlide";
 
+import ClipLoader from "react-spinners/ClipLoader";
+
 const Home = () => {
     const dispatch = useDispatch();
-    const { popularMovies, topRatedMovies, upComingMovies } = useSelector((state) => state.movie);
-    /* 호출을 확인한 코드
-    console.log(popularMovies, topRatedMovies, upComingMovies); */
-
+    const { popularMovies, topRatedMovies, upComingMovies, loading } = useSelector((state) => state.movie);
+    
     useEffect(() => {
         dispatch(movieAction.getMovies());
     }, []);
 
+    if(loading) {
+        return <ClipLoader color="#FFFFFF" loading={loading} size={150}></ClipLoader>
+    }
     return (
         <>
             {popularMovies.results && <Banner movie={popularMovies.results[0]}></Banner>}
