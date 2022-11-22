@@ -4,6 +4,7 @@ let initialState = {
     popularMovies: {},
     topRatedMovies: {},
     upComingMovies: {},
+    genreList: [],
     loading: true
 }
 
@@ -18,6 +19,7 @@ const movieSlice = createSlice({
             state.popularMovies = action.payload[0];
             state.topRatedMovies = action.payload[1];
             state.upComingMovies = action.payload[2];
+            state.genreList = action.payload[3];
             state.loading = false;
         },
         getMoviesFailure(state, action) {
